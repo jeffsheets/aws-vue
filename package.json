@@ -1,0 +1,37 @@
+{
+  "name": "spring-boot-multitenant-slides",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "contributors": [
+    "Jeff Sheets"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "prebuild": "del-cli \"dist/**/*\"",
+    "build": "webpack --env.production",
+    "predeploy": "npm run build",
+    "deploy": "ghpages --path dist",
+    "start": "webpack-dev-server --env.development --inline --progress --port 9997 --content-base ./src/public --content-base ./",
+    "test": "echo \"We should probably write some tests huh\""
+  },
+  "devDependencies": {
+    "@types/node": "~7.0.12",
+    "@types/react": "~15.0.23",
+    "@types/react-dom": "~15.5.0",
+    "@types/webpack-env": "~1.13.0",
+    "copy-webpack-plugin": "~4.0.1",
+    "del-cli": "~0.2.1",
+    "ghpages": "~0.0.10",
+    "object-partners-presentation": "objectpartners/object-partners-presentation-config#1.0.1",
+    "webpack": "~2.3.3",
+    "webpack-dev-server": "~2.4.5"
+  },
+  "dependencies": {
+    "highlight.js": "~9.10.0",
+    "object-partners-revealjs-theme": "ObjectPartners/object-partners-revealjs-theme#1.0.1",
+    "react": "~15.5.4",
+    "react-dom": "~15.5.4",
+    "react-render-html": "~0.1.6",
+    "reveal.js": "~3.4.1"
+  }
+}

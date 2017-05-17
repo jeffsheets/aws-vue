@@ -1,0 +1,49 @@
+section
+  h1 Multi-Tenancy
+
+section
+  h2 Multi-Tenancy
+  ul
+    li Serving Multiple Clients from One App
+    li Isolated View of Data per client
+    li Vital for Cloud Hosting
+
+section
+  h2 Cloud Multi-Tenancy
+  ul.no-bullets
+    li Infrastructure as a Service (IaaS)
+    li Platform as a Service (PaaS)
+    li Software as a Service (SaaS)
+
+section
+  h3 Infrastructure as a Service (IaaS)
+  ul
+    li Shared Provider
+    li VM / server per tenant
+    li Separate DB, App Server, CPU, Memory, entire stack
+    li Very custom per client, but very hard to maintain
+
+section
+  h3 Platform as a Service (PaaS)
+  ul
+    li Shared Hardware / CPU / Memory
+    li App Server per tenant
+    li Every client has own running App Server
+    li Source Control Versioning of Deployments is difficult!
+
+section
+  h3 Software as a Service (SaaS)
+  ul
+    li Shared App Server
+    li Data partitioned per tenant
+    li Different ways to isolate the data
+    li All tenants on same version of software
+    li Still concerns with data migration maintenance
+
+section
+  h3 SaaS Techniques
+  p 3 Ways to handle Data Isolation
+  ul
+    li Separate Databases
+    li Separate Schemas
+    li Table Discriminator Column
