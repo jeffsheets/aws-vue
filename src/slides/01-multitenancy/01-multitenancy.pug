@@ -44,6 +44,31 @@ section
   h3 SaaS Techniques
   p 3 Ways to handle Data Isolation
   ul
-    li Separate Databases
-    li Separate Schemas
-    li Table Discriminator Column
+    li DB per tenant
+    li Schema per tenant
+    li Table discriminator column
+
+section
+  h3 DB per tenant
+  ul
+    li Highest isolation level
+    li Every tenant has separate database
+    li App needs to change database connection to switch tenants
+    li Tough to scale
+
+section
+  h3 Table discriminator column
+  ul
+    li All data in shared tables
+    li Each table has a `tenant_id` column
+    li Code needs to be written carefully
+    li Easiest to scale, but risky for clients to see other clients data
+
+section
+  h3 Schema per tenant
+  ul
+    li Similar to separate DB
+    li Every tenant has own schema in the shared DB
+    li App needs to `set schema` to switch tenants
+    li This is the approach that we will discuss today
+
