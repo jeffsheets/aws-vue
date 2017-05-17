@@ -17,5 +17,5 @@ To deploy to gh-pages:
 yarn run deploy
 ```
 
-The slides will then be available at https://objectpartners.github.io/react-redux-workshop/
+The slides will then be available at https://jeffsheets.github.io/spring-boot-multitenant/
 
