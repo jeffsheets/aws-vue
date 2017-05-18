@@ -43,6 +43,11 @@
         height: 200px;
         width: 200px;
       }
+
+      &.large {
+        height: 600px;
+        width: 600px;
+      }
     }
   }
 
@@ -60,25 +65,33 @@
     }
   }
 
-  //pre {
-  //  font-size: .35em;
-  //  width: auto;
-  //  max-height: 560px;
-  //
-  //  code {
-  //    max-height: 560px;
-  //  }
-  //}
+  .citation {
+    font-size: 20px;
+    color: #000;
+    margin-top:-20px;
+  }
+
+  pre {
+    font-size: .6em;
+    width: auto;
+    max-height: 560px;
+
+    code {
+      max-height: 560px;
+
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+    }
+  }
+
+  .center {
+    text-align: center;
+  }
 
 }
 
-
-pre code {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-}
 
 .fill {
   width: 100%;

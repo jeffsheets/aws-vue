@@ -1,0 +1,70 @@
+section
+  h1 Useful Tools
+
+section
+  h2 MariaDB4j
+  ul
+    li
+      a(href="https://mariadb.org/", target="_blank") MariaDB
+      |  is the new open source MySQL
+    li
+      a(href="https://github.com/vorburger/MariaDB4j", target="_blank") MariaDB4j
+      |  is a Java/Spring wrapper
+    li Embedded database for local and CI tests
+    li Similar to H2 but uses MariaDB
+    li Spins up DB at Boot Startup
+
+section
+  h2 MariaDB4j - Pros
+  ul
+    li Can persist db to filesystem for local development
+    li Creates clean db for every test run, then destroys it
+    li Eliminates need to install MariaDB locally
+    li SQL migrations locally to better match than H2
+
+section
+  h2 MariaDB4j - Cons
+  ul
+    li Slower startup than H2 - 30 seconds or so
+    li Have to run local server to connect with DB Tools
+
+section
+  h2 MariaDB4j
+  pre.
+    <code class="groovy" data-trim data-noescape>
+      @Configuration
+      @Profile(['local', 'integrationTest'])
+      class EmbeddedMariaDbConfig {
+
+      @Bean
+      MariaDB4jSpringService mariaDB4jSpringService() {
+        new MariaDB4jSpringService()
+      }
+
+      @Bean
+      DataSource dataSource(MariaDB4jSpringService mariaDB4jSpringService,
+      @Value('${em.mariaDB4j.databaseName}') String databaseName,
+      @Value('${spring.datasource.username}') String datasourceUsername,
+      @Value('${spring.datasource.password}') String datasourcePassword,
+      @Value('${spring.datasource.driver-class-name}') String datasourceDriver) {
+          //Create our database with default root user and no password
+          mariaDB4jSpringService.getDB().createDB(databaseName)
+
+          DBConfigurationBuilder config = mariaDB4jSpringService.getConfiguration()
+
+          DataSourceBuilder
+            .create()
+            .username(datasourceUsername)
+            .password(datasourcePassword)
+            .url(config.getURL(databaseName))
+            .driverClassName(datasourceDriver)
+            .build();
+        }
+      }
+    </code>
+
+
+section
+  h2 Grails Multi Tenancy
+  ul
+    li blah blah blah
