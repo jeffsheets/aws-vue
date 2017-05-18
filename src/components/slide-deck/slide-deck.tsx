@@ -64,7 +64,7 @@ export class SlideDeck extends React.Component<SlideDeckProps, SlideDeckState> {
       <div className="reveal">
         <div className="slides">
           <section data-state="title">
-            <h2>Spring Boot Multi-Tenancy</h2>
+            <h2>Spring Boot Multitenancy</h2>
             <h3>Jeff Sheets - Nebraska.Code() 2017</h3>
           </section>
           {
