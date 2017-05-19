@@ -11,6 +11,22 @@ section
     li Run locally as an executable jar or war
 
 section
+  h3 Fully functioning Boot app
+  a(href="https://github.com/rwinch/spring-boot-hello/blob/master/tweet/app.groovy", target="_blank").citation https://github.com/rwinch/spring-boot-hello/blob/master/tweet/app.groovy
+  pre.
+    <code class="groovy" data-trim data-noescape contentEditable>
+    @RestController
+    class HelloController {
+
+      @RequestMapping("/")
+      def hello() {
+        [message: "Hello"]
+      }
+    }
+
+    </code>
+
+section
   h2 Spring Boot Features
   ul
     li Spring Data JPA / Hibernate / REST
@@ -51,7 +67,7 @@ section
 section
   h4 MultiTenant ServletFilter
   pre.
-    <code class="groovy" data-trim data-noescape>
+    <code class="groovy" data-trim data-noescape contentEditable>
     public class MultiTenantServletFilter implements Filter {
       @Autowired
       MultitenantService multitenantService
@@ -74,26 +90,25 @@ section
 section
   h4 Tenant in ThreadLocal
   pre.
-    <code class="groovy" data-trim data-noescape>
+    <code class="groovy" data-trim data-noescape contentEditable>
       @Service
       class MultitenantService {
           String getClientName() {
-              ThreadLocalUtil.getThreadVariable(
-                MedispendConstants.REQUEST_SUBDOMAIN)
+              ThreadLocalUtil.getThreadVariable('CLIENT_NAME')
           }
 
           void setClientName(String clientName) {
               ThreadLocalUtil.setThreadVariable(
-                MedispendConstants.REQUEST_SUBDOMAIN, clientName)
+                                    'CLIENT_NAME', clientName)
           }
       }
 
     </code>
 
 section
-  h4 Tenant Resolver Impl
+  h4 Hibernate Tenant Resolver Impl
   pre.
-    <code class="groovy" data-trim data-noescape>
+    <code class="groovy" data-trim data-noescape contentEditable>
       public class TenantIdentifierResolverImpl implements
                                CurrentTenantIdentifierResolver {
          @Autowired
@@ -101,7 +116,6 @@ section
 
          @Override
          public String resolveCurrentTenantIdentifier() {
-             //Set in MultiTenantServletFilter
              multitenantService.clientName ?: 'UNSPECIFIED_SUBDOMAIN'
          }
 
@@ -114,9 +128,9 @@ section
     </code>
 
 section
-  h4 Multitenant Connection Provider
+  h4 Hibernate Connection Provider
   pre.
-    <code class="groovy" data-trim data-noescape>
+    <code class="groovy" data-trim data-noescape contentEditable>
     public class MultiTenantConnectionProviderImpl
               implements MultiTenantConnectionProvider {
       @Override
@@ -138,7 +152,7 @@ section
 section
   h4 Persistence Config
   pre.
-    <code class="groovy" data-trim data-noescape>
+    <code class="groovy" data-trim data-noescape contentEditable>
     @Configuration
     @Profile('!test')
     class PersistenceConfig {
@@ -167,7 +181,7 @@ section
 section
   h4 Spring Data JPA Entity
   pre.
-    <code class="groovy" data-trim data-noescape>
+    <code class="groovy" data-trim data-noescape contentEditable>
     @Entity
     class Customer {
 
@@ -191,7 +205,7 @@ section
 section
   h4 Spring Data JPA Query
   pre.
-    <code class="groovy" data-trim data-noescape>
+    <code class="groovy" data-trim data-noescape contentEditable>
     @RepositoryRestResource
     interface CustomerRepository extends JpaRepository&lt;Customer, Long> {
 

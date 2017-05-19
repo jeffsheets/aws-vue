@@ -19,16 +19,9 @@ section
     li Every code version is now tied to an exact database DDL version, cool!
 
 section
-  h3 How does Flyway work?
-  ul
-    li SCHEMA_VERSION table keeps track of which scripts have been applied
-    li Scripts are ordered by filename numbering, so next script gets next number
-    li Flyway scans files and applies scripts during Spring Boot startup
-
-section
   h4 DB Migration File
   pre.
-    <code class="sql" data-trim data-noescape>
+    <code class="sql" data-trim data-noescape contentEditable>
     CREATE TABLE FancyReport
     (
         ID BIGINT(20) UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -46,9 +39,18 @@ section
     </code>
 
 section
+  h3 How does Flyway work?
+  ul
+    li SCHEMA_VERSION table keeps track of which scripts have been applied
+    li Scripts are ordered by filename numbering, so next script gets next number
+    li Flyway scans files and applies scripts during Spring Boot startup
+
+section
   h3 Flyway Tips
   ul
     li Just use numbers in filenames, helps with dev branch merges
+      ul
+        li v1.10.sql, not v1.10_customer_table.sql
     li Use migrations when running Unit/Int Tests!
     li DO NOT modify a flyway file after it has been deployed
       ul
@@ -73,6 +75,9 @@ section
       |  against all tenant schemas on deploy
       ul
         li Easy with Gradle + Jenkins
+    li Disable the spring boot automatic flyway migrations for deployments
+      ul
+        li Enabled for local and tests
 
 section
   img(src="../../../resources/images/mariadb.png")
@@ -105,7 +110,7 @@ section
 section
   h2 MariaDB4j
   pre.small.
-    <code class="groovy" data-trim data-noescape>  @Configuration
+    <code class="groovy" data-trim data-noescape contentEditable>  @Configuration
       @Profile(['local', 'integrationTest'])
       class EmbeddedMariaDbConfig {
 

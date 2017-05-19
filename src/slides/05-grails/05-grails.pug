@@ -8,12 +8,17 @@ section
     li Super slick opinionated Spring config
     li GORM -&nbsp;
       a(href="http://gorm.grails.org/latest/hibernate/manual/index.html#whereQueries", target="_blank") Grails Object Relational Mapping
-    li Easy to read&nbsp;
-      a(href="http://guides.grails.org/database-per-tenant/guide/index.html", target="_blank") Grails Multitenant Docs
+  pre.
+    <code class="groovy" data-trim data-noescape contentEditable>def query = Person.where {
+       firstName == "Bart"
+    }
+    Person bart = query.find()
+    </code>
 
 section
   h3 Grails Coolness
-  p Helpers for dealing with common and tenant schemas
+  p Easy to read&nbsp;
+    a(href="http://guides.grails.org/database-per-tenant/guide/index.html", target="_blank") Grails Multitenant Docs
   ul
     li @CurrentTenant
     li MultiTenant trait
