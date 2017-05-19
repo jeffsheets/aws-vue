@@ -2,31 +2,120 @@ section
   h1 Multi Tenancy Gotchas
 
 section
-  h2 Common Schema
+  h2 Common (Admin) Schema
   ul
-    li blah blah blah
+    li Table of tenant names and properties
+    li As much as possible, put common data into separate microservices
+      ul
+        li Reduce redundancy and maintenance
+
+section
+  h2 Separate Admin UI App
+  ul
+    li Consider having a separate `admin` UI app
+      ul
+        li So that the multitenant app deals solely in client-specific REST services
+        li It is tough to call multiple tenants with same DB session with Hibernate
+        li
+          a(href="https://hibernate.atlassian.net/browse/HHH-9766", target="_blank") Bug HHH-9766
 
 section
   h2 Data Migrations
   ul
-    li blah blah blah
+    li Traditional DBA workflow to manually add columns and seed data will not scale
+    li Maintaining 10s to 100s to 1000s of tenant schemas
+    li Use Flyway Database Migrations
+      ul
+        li or Liquibase if you love XML
 
 section
-  h2 Client Specific Data Loads
+  img(src="../../../resources/images/flyway.png")
+  h3 Flyway DB Migrations
   ul
-    li blah blah blah
+    li Version control for your database
+    li Commit DDL and Data migration scripts to the project repo
+    li Every code version is now tied to an exact database DDL version, cool!
 
 section
-  h2 Users per client
+  h3 How does Flyway work?
   ul
-    li blah blah blah
+    li SCHEMA_VERSION table keeps track of which scripts have been applied
+    li Scripts are ordered by filename numbering, so next script gets next number
+    li Flyway scans files and applies scripts during Spring Boot startup
 
 section
-  h3 Multi Tenant DB calls in same session
+  h4 DB Migration File
+  pre.
+    <code class="sql" data-trim data-noescape>
+    CREATE TABLE FancyReport
+    (
+        ID BIGINT(20) UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+        UUID VARCHAR(50) NOT NULL,
+
+        Start DATETIME NOT NULL,
+        End DATETIME NOT NULL,
+        Duration BIGINT(20) NOT NULL,
+        Location VARCHAR(512),
+
+        NumProcessed BIGINT(20) UNSIGNED NOT NULL,
+        LastProcessedId BIGINT(20) UNSIGNED
+    );
+
+    </code>
+
+section
+  h3 Flyway Tips
   ul
-    li blah blah blah
+    li Just use numbers in filenames, helps with dev branch merges
+    li Use migrations when running Unit/Int Tests!
+    li DO NOT modify a flyway file after it has been deployed
+      ul
+        li The stored file hash will no longer match, causing startup to fail
+
+section
+  img.large(src="../../../resources/images/flyway-file-hell.png")
+  h4 Flyway file mess
+
+section
+  h3 Multitenant Scripts
+  ul
+    li Keep DDL scripts in separate folder than data load
+    li Schema load scripts are same for all tenants
+    li Data Load scripts are tenant-specific
+    li You may want a tool to manage tenant data
+
+section
+  h3 Multitenant Migrations
+  ul
+    li You DEFINITELY need a script to run migrations
+      |  against all tenant schemas on deploy
+      ul
+        li Easy with Gradle + Jenkins
 
 section
   h3 Duplicate Record Ids on each DB
   ul
-    li blah blah blah
+    li `Customer` table in each tenant schema
+    li CustomerID 1 exists in each schema
+    li Can make it tough to track down in logs later
+    li Suggest using UUIDs from the beginning
+
+section
+  h3 Users and Roles and User Attributes
+  ul
+    li You must decide if User Accounts are per tenant
+    li Or can your Users access multiple tenants?
+      ul
+        li This is really a business question
+    li Role Names are same for all tenants (because code is same)
+    li User Attributes could be per User, or per User-Tenant
+
+section
+  img(src="../../../resources/images/auth0.png")
+  ul
+    li A cloud identity provider, like Auth0 can help
+    li Auth0 handles authentication credentials
+    ul
+      li And OAuth connections to Google, Facebook, etc
+    li Amegala is using Auth0 for the conference website
+    li Stores user attributes as simple JSON

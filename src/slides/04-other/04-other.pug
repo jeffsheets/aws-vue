@@ -2,7 +2,8 @@ section
   h1 Useful Tools
 
 section
-  h2 MariaDB4j
+  img(src="../../../resources/images/mariadb.png")
+  h3 MariaDB4j
   ul
     li
       a(href="https://mariadb.org/", target="_blank") MariaDB
@@ -30,41 +31,48 @@ section
 
 section
   h2 MariaDB4j
-  pre.
-    <code class="groovy" data-trim data-noescape>
-      @Configuration
+  pre.small.
+    <code class="groovy" data-trim data-noescape>  @Configuration
       @Profile(['local', 'integrationTest'])
       class EmbeddedMariaDbConfig {
 
-      @Bean
-      MariaDB4jSpringService mariaDB4jSpringService() {
-        new MariaDB4jSpringService()
-      }
+      @Bean MariaDB4jSpringService mariaDB4jSpringService() {
+        new MariaDB4jSpringService() }
 
-      @Bean
-      DataSource dataSource(MariaDB4jSpringService mariaDB4jSpringService,
-      @Value('${em.mariaDB4j.databaseName}') String databaseName,
+      @Bean DataSource dataSource(
+      MariaDB4jSpringService mariaDB4jSpringService,
+      @Value('${mariaDB4j.databaseName}') String databaseName,
       @Value('${spring.datasource.username}') String datasourceUsername,
       @Value('${spring.datasource.password}') String datasourcePassword,
       @Value('${spring.datasource.driver-class-name}') String datasourceDriver) {
-          //Create our database with default root user and no password
           mariaDB4jSpringService.getDB().createDB(databaseName)
 
           DBConfigurationBuilder config = mariaDB4jSpringService.getConfiguration()
-
-          DataSourceBuilder
-            .create()
-            .username(datasourceUsername)
-            .password(datasourcePassword)
+          DataSourceBuilder.create()
+            .username(datasourceUsername).password(datasourcePassword)
             .url(config.getURL(databaseName))
-            .driverClassName(datasourceDriver)
-            .build();
+            .driverClassName(datasourceDriver).build()
         }
       }
     </code>
 
 
 section
-  h2 Grails Multi Tenancy
+  img.medium(src="../../../resources/images/grails.jpeg")
+  h3 Grails Multi Tenancy
   ul
-    li blah blah blah
+    li Super slick opinionated Spring config
+    li GORM -&nbsp;
+      a(href="http://gorm.grails.org/latest/hibernate/manual/index.html#whereQueries", target="_blank") Grails Object Relational Mapping
+    li Easy to read&nbsp;
+      a(href="http://guides.grails.org/database-per-tenant/guide/index.html", target="_blank") Grails Multitenant Docs
+
+section
+  h3 Grails Coolness
+  p Helpers for dealing with common and tenant schemas
+  ul
+    li @CurrentTenant
+    li MultiTenant trait
+      ul
+        li eachTenant{} closure
+        li withTenant{} closure

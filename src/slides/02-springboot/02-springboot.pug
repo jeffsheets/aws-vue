@@ -17,7 +17,13 @@ section
     li Data Migrations with Flyway
     li Externalized Properties & Profiles
     li Spring Security simplified
-    li No XML at all! All Java config (even web.xml)
+
+section
+  h2 Oh and one more thing
+  ul
+    li
+      strong No XML at all!
+    li All Java config (even web.xml)
 
 section
   h3 How to identify the tenant?
@@ -147,6 +153,55 @@ section
     'hibernate.multi_tenant_connection_provider': multiTenantProvider
                 ]).build()
         }
+    }
+
+    </code>
+
+section
+  h2 Configured. Now What?
+  ul
+    li Just write code as if you have only one tenant
+    li 95% of your code does not care that there are multi schemas
+    li Example....
+
+section
+  h4 Spring Data JPA Entity
+  pre.
+    <code class="groovy" data-trim data-noescape>
+    @Entity
+    class Customer {
+
+      @Id
+      @Column
+      @GeneratedValue(strategy = GenerationType.IDENTITY)
+      Long id
+
+      @Column
+      String email
+
+      @Column
+      String firstName
+
+      @Column
+      String lastName
+    }
+
+    </code>
+
+section
+  h4 Spring Data JPA Query
+  pre.
+    <code class="groovy" data-trim data-noescape>
+    @RepositoryRestResource
+    interface CustomerRepository extends JpaRepository&lt;Customer, Long> {
+
+      Customer findByEmail(String email)
+
+      List&lt;Customer> findByEmailIn(List&lt;String> emails)
+
+      List&lt;Customer> findByEmailAndLastName(String email, String lastName)
+
+      List&lt;Customer> findByLastNameOrderByFirstNameAsc(String lastName)
     }
 
     </code>

@@ -76,6 +76,10 @@
     width: auto;
     max-height: 560px;
 
+    &.small {
+      font-size:.5em;
+    }
+
     code {
       max-height: 560px;
 
@@ -88,6 +92,14 @@
 
   .center {
     text-align: center;
+    img {
+      margin: 0 15px;
+      vertical-align: middle;
+    }
+  }
+
+  .vertical {
+    vertical-align: middle;
   }
 
 }
