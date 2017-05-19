@@ -1,23 +1,5 @@
 section
-  h1 Multi Tenancy Gotchas
-
-section
-  h2 Common (Admin) Schema
-  ul
-    li Table of tenant names and properties
-    li As much as possible, put common data into separate microservices
-      ul
-        li Reduce redundancy and maintenance
-
-section
-  h2 Separate Admin UI App
-  ul
-    li Consider having a separate `admin` UI app
-      ul
-        li So that the multitenant app deals solely in client-specific REST services
-        li It is tough to call multiple tenants with same DB session with Hibernate
-        li
-          a(href="https://hibernate.atlassian.net/browse/HHH-9766", target="_blank") Bug HHH-9766
+  h1 Data Migrations
 
 section
   h2 Data Migrations
@@ -93,29 +75,56 @@ section
         li Easy with Gradle + Jenkins
 
 section
-  h3 Duplicate Record Ids on each DB
+  img(src="../../../resources/images/mariadb.png")
+  h3 MariaDB4j
   ul
-    li `Customer` table in each tenant schema
-    li CustomerID 1 exists in each schema
-    li Can make it tough to track down in logs later
-    li Suggest using UUIDs from the beginning
+    li
+      a(href="https://mariadb.org/", target="_blank") MariaDB
+      |  is the new open source MySQL
+    li
+      a(href="https://github.com/vorburger/MariaDB4j", target="_blank") MariaDB4j
+      |  is a Java/Spring wrapper
+    li Embedded database for local and CI tests
+    li Similar to H2 but uses MariaDB
+    li Spins up DB at Boot Startup
 
 section
-  h3 Users and Roles and User Attributes
+  h2 MariaDB4j - Pros
   ul
-    li You must decide if User Accounts are per tenant
-    li Or can your Users access multiple tenants?
-      ul
-        li This is really a business question
-    li Role Names are same for all tenants (because code is same)
-    li User Attributes could be per User, or per User-Tenant
+    li Can persist db to filesystem for local development
+    li Creates clean db for every test run, then destroys it
+    li Eliminates need to install MariaDB locally
+    li SQL migrations locally to better match than H2
 
 section
-  img(src="../../../resources/images/auth0.png")
+  h2 MariaDB4j - Cons
   ul
-    li A cloud identity provider, like Auth0 can help
-    li Auth0 handles authentication credentials
-    ul
-      li And OAuth connections to Google, Facebook, etc
-    li Amegala is using Auth0 for the conference website
-    li Stores user attributes as simple JSON
+    li Slower startup than H2 - 30 seconds or so
+    li Have to run local server to connect with DB Tools
+
+section
+  h2 MariaDB4j
+  pre.small.
+    <code class="groovy" data-trim data-noescape>  @Configuration
+      @Profile(['local', 'integrationTest'])
+      class EmbeddedMariaDbConfig {
+
+      @Bean MariaDB4jSpringService mariaDB4jSpringService() {
+        new MariaDB4jSpringService() }
+
+      @Bean DataSource dataSource(
+      MariaDB4jSpringService mariaDB4jSpringService,
+      @Value('${mariaDB4j.databaseName}') String databaseName,
+      @Value('${spring.datasource.username}') String datasourceUsername,
+      @Value('${spring.datasource.password}') String datasourcePassword,
+      @Value('${spring.datasource.driver-class-name}') String datasourceDriver) {
+          mariaDB4jSpringService.getDB().createDB(databaseName)
+
+          DBConfigurationBuilder config = mariaDB4jSpringService.getConfiguration()
+          DataSourceBuilder.create()
+            .username(datasourceUsername).password(datasourcePassword)
+            .url(config.getURL(databaseName))
+            .driverClassName(datasourceDriver).build()
+        }
+      }
+    </code>

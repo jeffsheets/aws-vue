@@ -1,0 +1,48 @@
+section
+  h1 Multitenancy Tips
+
+section
+  h2 Common (Admin) Schema
+  ul
+    li Table of tenant names and properties
+    li As much as possible, put common data into separate microservices
+      ul
+        li Reduce redundancy and maintenance
+
+section
+  h2 Separate Admin UI App
+  ul
+    li Consider having a separate `admin` UI app
+      ul
+        li So that the multitenant app deals solely in client-specific REST services
+        li It is tough to call multiple tenants with same DB session with Hibernate
+        li
+          a(href="https://hibernate.atlassian.net/browse/HHH-9766", target="_blank") Bug HHH-9766
+
+section
+  h3 Duplicate Record Ids on each DB
+  ul
+    li `Customer` table in each tenant schema
+    li CustomerID 1 exists in each schema
+    li Can make it tough to track down in logs later
+    li Suggest using UUIDs from the beginning
+
+section
+  h3 Users and Roles and User Attributes
+  ul
+    li You must decide if User Accounts are per tenant
+    li Or can your Users access multiple tenants?
+      ul
+        li This is really a business question
+    li Role Names are same for all tenants (because code is same)
+    li User Attributes could be per User, or per User-Tenant
+
+section
+  img(src="../../../resources/images/auth0.png")
+  ul
+    li A cloud identity provider, like Auth0 can help
+    li Auth0 handles authentication credentials
+    ul
+      li And OAuth connections to Google, Facebook, etc
+    li Amegala is using Auth0 for the conference website
+    li Stores user attributes as simple JSON

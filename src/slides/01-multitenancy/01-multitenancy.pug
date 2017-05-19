@@ -2,11 +2,22 @@ section
   h1 Multitenancy
 
 section
-  h2 Multitenancy
+  h3 Multitenancy
   ul
     li Serving Multiple Clients from One App
     li Isolated View of Data per client
-    li Vital for Cloud Hosting
+  img.larger(src="../../../resources/images/multitenant.png")
+  br
+  a(href="http://www.jesusgilhernandez.com/wp-content/uploads/2012/12/singletenant-multitenant.png", target="_blank").citation http://www.jesusgilhernandez.com/wp-content/uploads/2012/12/singletenant-multitenant.png
+
+section
+  h2 Vital for Cloud Hosting
+  ul
+    li Salesforce
+    li Amegala
+    li Slack
+    li Trello / BasecampHQ / Asana
+    li Hosted JIRA
 
 section
   img.large(src="../../../resources/images/cloud.png")
@@ -21,12 +32,20 @@ section
     li Software as a Service (SaaS)
 
 section
+  img.large(src="../../../resources/images/cloud.png")
+  br
+  a(href="https://www.stickermule.com/marketplace/3442-there-is-no-cloud", target="_blank").citation https://www.stickermule.com/marketplace/3442-there-is-no-cloud
+
+section
   h3 Infrastructure as a Service (IaaS)
   ul
     li Shared Provider
     li VM / server per tenant
     li Separate DB, App Server, CPU, Memory, entire stack
     li Very custom per client, but very hard to maintain
+
+section
+  img(src="../../../resources/images/cloud-types.png")
 
 section
   h3 Platform as a Service (PaaS)
@@ -72,6 +91,14 @@ section
     li Tough to scale
 
 section
+  h3 Schema per tenant
+  ul
+    li Similar to separate DB
+    li Every tenant has own schema in the shared DB
+    li App needs to `set schema` to switch tenants
+    li This is the approach that we will discuss today
+
+section
   h3 Table discriminator column
   ul
     li All data in shared tables
@@ -79,11 +106,4 @@ section
     li Code needs to be written carefully
     li Easiest to scale, but risky for clients to see other clients data
 
-section
-  h3 Schema per tenant
-  ul
-    li Similar to separate DB
-    li Every tenant has own schema in the shared DB
-    li App needs to `set schema` to switch tenants
-    li This is the approach that we will discuss today
 
