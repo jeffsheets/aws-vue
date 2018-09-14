@@ -1,4 +1,4 @@
-# spring-boot-multitenant-slides
+# aws-vue-slides
 
 ## Set up
 
@@ -17,5 +17,5 @@ To deploy to gh-pages:
 yarn run deploy
 ```
 
-The slides will then be available at https://jeffsheets.github.io/spring-boot-multitenant/
+The slides will then be available at https://jeffsheets.github.io/aws-vue/
 
