@@ -5,7 +5,7 @@ import 'reveal.js/css/reveal.css';
 import 'object-partners-revealjs-theme';
 import 'highlight.js/styles/monokai.css';
 
-import '!style-loader!css-loader?importLoaders=1!postcss-loader?config=node_modules/object-partners-presentation/dist/config-files/postcss.config.js!./slide-deck.scss'; // hack hack hack
+import '!style-loader!css-loader?importLoaders=1!postcss-loader?config=node_modules/object-partners-presentation/dist/config-files/postcss.config.js!sass-loader!./slide-deck.scss'; // hack hack hack
 
 export interface SlideDeckProps {
   slides: any[][];
@@ -64,8 +64,8 @@ export class SlideDeck extends React.Component<SlideDeckProps, SlideDeckState> {
       <div className="reveal">
         <div className="slides">
           <section data-state="title">
-            <h2>Spring Boot Multitenancy</h2>
-            <h3>Jeff Sheets - Nebraska.Code() 2017</h3>
+            <h2>AWS Serverless for Devs</h2>
+            <h3>Vue + Micronaut -- Jeff Sheets 2018</h3>
           </section>
           {
             slides
