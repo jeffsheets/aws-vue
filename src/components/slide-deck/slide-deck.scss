@@ -26,6 +26,7 @@
       background: unset;
       border: unset;
       box-shadow: unset;
+      vertical-align: middle;
 
       &.tiny {
         height: 40px;
@@ -35,22 +36,18 @@
       }
 
       &.small {
-        height: 100px;
         width: 100px;
       }
 
       &.medium {
-        height: 200px;
         width: 200px;
       }
 
       &.large {
-        height: 600px;
         width: 600px;
       }
 
       &.larger {
-        height: 125%;
         width: 125%;
       }
     }

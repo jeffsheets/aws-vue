@@ -88,12 +88,32 @@ Lambda proxy response object format
  - https://aws.amazon.com/premiumsupport/knowledge-center/malformed-502-api-gateway/
  - https://medium.com/@lakshmanLD/lambda-proxy-vs-lambda-integration-in-aws-api-gateway-3a9397af0e6d
 
+Vue
+ - https://cli.vuejs.org/guide/deployment.html#general-guidelines
+ - https://github.com/multiplegeorges/vue-cli-plugin-s3-deploy
+ - create s3 bucket `aws s3 mb s3://grachio`
+ - S3 bucket permissions public read https://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteAccessPermissionsReqd.html
+ - s3 bucket enable website hosting
+ - IntelliJ Vue plugin
+ - CORS https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-cors.html
+   - CORS only allows wildcard or single domain
 
-** TODO **
+Git - create and save to github repos
+
 Google Sheets API
-Dark Sky API
-VueCLI
-Github projects
+ - Enable API
+ - API Key setup https://developers.google.com/sheets/api/guides/authorizing
+ - Public read w/ API Key
+   - Could do Oauth2.0 but didn't want to mess with it
 
-** Extra Credit **
-Rachio API
+Increase Lambda memory to 512 for metaspace on API call
+
+Env Variables for keys
+
+** Improvements **
+Rachio API push to Kinesis and store in AWS
+Separate Lambda for Sheets & DarkSky
+Call Weather API and store value each day after watering
+Save backups of API calls, just in case network dies
+Lambda API Key to limit usage
+CircleCI Build/Deploy on git commits

@@ -2,12 +2,123 @@ section
   h1 The Project
 
 section
-  img.medium(src="../../../resources/images/boot-logo.png")
-  h3 The Project
+  h2 Sprinklers in the Rain?
+  img(src="../../../resources/images/sprinklers-rain.jpg")
+  br
+  a(href="https://www.themasterslawncare.com/sites/default/files/styles/service_hero_variant_custom_user_wide_1600_1x/public/blog/irrigationsuringrain.jpg?itok=mro6lXkI&timestamp=1487039068", target="_blank").citation https://www.themasterslawncare.com/
+
+section
+  img(src="../../../resources/images/rachio.png")
+  img.medium(src="../../../resources/images/rachio-ctrl.jpg")
   ul
-    li The Project
-    li Visualize my watering data compared to actual weather conditions
-    li Rachio smart sprinkler
-    li Google Spreadsheet to hold data
-    li IFTTT.com (If This Then That)
-    li DarkSky weather API - historical actuals
+    li Rachio Smart Sprinkler controller
+    li Forecast changes watering schedule
+    li Visualize my sprinkler data compared to actual weather conditions
+
+section
+  h3 Grachio
+  ul
+    li Groovy + Rachio = Grachio
+    li Groovy language - easy to read and write
+    li
+      a(href="https://rachio.readme.io/docs/getting-started", target="_blank") Rachio REST API
+
+section
+  h3 If This Then That &nbsp;
+    img(src="../../../resources/images/ifttt.png")
+  img(src="../../../resources/images/ifttt-what.png")
+  br
+  a(href="https://ifttt.com/discover", target="_blank").citation https://ifttt.com/discover
+
+section
+  img(src="../../../resources/images/googlesheets.png")
+  img(src="../../../resources/images/sprinkler-data.png")
+
+section
+  img(src="../../../resources/images/darksky.png")
+  img(src="../../../resources/images/darksky-what.png")
+  br
+  a(href="https://darksky.net/dev", target="_blank").citation https://darksky.net/dev
+
+section
+  h4 https://api.darksky.net/forecast/{key}/42.3601,-71.0589,255657600
+  pre.small.
+    <code class="javascript" data-trim data-noescape contentEditable>{
+      "latitude": 42.3601,
+      "longitude": -71.0589,
+      "timezone": "America/New_York",
+      "hourly": {
+        "summary": "Snow (6–9 in.) and windy starting in the afternoon.",
+        "icon": "snow",
+        "data": [
+          {
+            "time": 255589200,
+            "summary": "Mostly Cloudy",
+            "icon": "partly-cloudy-night",
+            "precipIntensity": 0,
+            "precipProbability": 0,
+            "temperature": 22.8,
+            "apparentTemperature": 16.46,
+            "dewPoint": 15.51,
+            "humidity": 0.73,
+            "pressure": 1026.78,
+            "windSpeed": 4.83,
+            "windBearing": 354,
+            "cloudCover": 0.78,
+            "uvIndex": 0,
+            "visibility": 9.62
+          },
+          ...
+        ]
+      },
+      "daily": {
+        "data": [
+          {
+            "time": 255589200,
+            "summary": "Snow (9–14 in.) and windy starting in the afternoon.",
+            "icon": "snow",
+            "sunriseTime": 255613996,
+            "sunsetTime": 255650764,
+            "moonPhase": 0.97,
+            "precipIntensity": 0.0354,
+            "precipIntensityMax": 0.1731,
+            "precipIntensityMaxTime": 255657600,
+            "precipProbability": 1,
+            "precipAccumulation": 7.337,
+            "precipType": "snow",
+            "temperatureHigh": 31.84,
+            "temperatureHighTime": 255632400,
+            "temperatureLow": 28.63,
+            "temperatureLowTime": 255697200,
+            "apparentTemperatureHigh": 20.47,
+            "apparentTemperatureHighTime": 255625200,
+            "apparentTemperatureLow": 13.03,
+            "apparentTemperatureLowTime": 255697200,
+            "dewPoint": 24.72,
+            "humidity": 0.86,
+            "pressure": 1016.41,
+            "windSpeed": 22.93,
+            "windBearing": 56,
+            "cloudCover": 0.95,
+            "uvIndex": 1,
+            "uvIndexTime": 255621600,
+            "visibility": 4.83,
+            "temperatureMin": 22.72,
+            "temperatureMinTime": 255596400,
+            "temperatureMax": 32.04,
+            "temperatureMaxTime": 255672000,
+            "apparentTemperatureMin": 11.13,
+            "apparentTemperatureMinTime": 255650400,
+            "apparentTemperatureMax": 20.47,
+            "apparentTemperatureMaxTime": 255625200
+          }
+        ]
+      },
+      "offset": -5
+    }
+    </code>
+
+section
+  a(href="http://grachio.s3-website-us-east-1.amazonaws.com/", target="_blank") http://grachio.s3-website-us-east-1.amazonaws.com/
+  img(src="../../../resources/images/grachio-ui.png")
+
