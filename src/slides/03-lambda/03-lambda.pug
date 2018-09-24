@@ -2,134 +2,130 @@ section
   h1 Lambda & Micronaut
 
 section
-  h2 Data Migrations
+  h2
+    img(src="../../../resources/images/aws.png")
+    | &nbsp; Lambda
   ul
-    li Traditional DBA workflow to manually add columns and seed data will not scale
-    li Maintaining 10s to 100s to 1000s of tenant schemas
-    li Use Flyway Database Migrations
-      ul
-        li or Liquibase if you love XML
+    li Functions as a service
+    li Node.js, Java JVM, C#, Go, Python
+    li No worrying about app servers for functional services
+    li Only pay for what you use (compute time + requests)
 
 section
-  img(src="../../../resources/images/flyway.png")
-  h3 Flyway DB Migrations
-  ul
-    li Version control for your database
-    li Commit DDL and Data migration scripts to the project repo
-    li Every code version is now tied to an exact database DDL version, cool!
+  h2 Lambda Use Cases
+  img(src="../../../resources/images/lambda-lambda-lambda.jpg")
+  ul.no-bullets
+    li Event/Stream Processing
+    li Internet of Things backend
+    li Webapps *(maybe)
+  br
+  a(href="http://revengeofthenerds.wikia.com/" target="_blank").citation http://revengeofthenerds.wikia.com/
 
 section
-  h4 DB Migration File
+  h2 Lambda Webapps
+  img(src="../../../resources/images/lambda-flow.png")
+  br
+  a(href="https://aws.amazon.com/lambda/" target="_blank").citation https://aws.amazon.com/lambda/
+
+section
+  h3 AWS Lamba Console
+  img(src="../../../resources/images/lambda-config.png")
+
+section
+  img(src="../../../resources/images/micronaut.png")
+  ul
+    li Modern JVM light-weight microservices
+    li Compile-time dependency injection
+    li Built for APIs and Serverless
+    li Like Spring-boot, but compile-time speed
+
+section
+  img.venti(src="https://media.giphy.com/media/JJhiRdcYfcokU/giphy.gif")
+  h3 Your First Micronaut Lambda
+  ul
+    li http://sdkman.io/ `sdk install micronaut`
+    li `mn create-function grachio --lang groovy`
+    li IntelliJ - Enable annotation processing
+    li Gradle AWS Plugin is already setup for you
+  br
+  a(href="https://media.giphy.com/media/JJhiRdcYfcokU/giphy.gif" target="_blank").citation https://media.giphy.com/media/JJhiRdcYfcokU/giphy.gif
+
+section
+  h4 Micronaut Simple Lambda
   pre.
-    <code class="sql" data-trim data-noescape contentEditable>
-    CREATE TABLE FancyReport
-    (
-        ID BIGINT(20) UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
-        UUID VARCHAR(50) NOT NULL,
+    <code class="groovy" contentEditable>@Field
+    @Inject
+    HelloService helloService
 
-        Start DATETIME NOT NULL,
-        End DATETIME NOT NULL,
-        Duration BIGINT(20) NOT NULL,
-        Location VARCHAR(512),
-
-        NumProcessed BIGINT(20) UNSIGNED NOT NULL,
-        LastProcessedId BIGINT(20) UNSIGNED
-    );
-
+    Message hello(Person person) {
+        helloService.hello(person)
+    }
     </code>
 
 section
-  h3 How does Flyway work?
-  ul
-    li SCHEMA_VERSION table keeps track of which scripts have been applied
-    li Scripts are ordered by filename numbering, so next script gets next number
-    li Flyway scans files and applies scripts during Spring Boot startup
+  h4 Micronaut Project Lambda
+  pre.
+    <code class="groovy" contentEditable>@Field static final Logger log = LoggerFactory.getLogger('grachio.GrachioFunction')
 
-section
-  h3 Flyway Tips
-  ul
-    li Just use numbers in filenames, helps with dev branch merges
-      ul
-        li v1.10.sql, not v1.10_customer_table.sql
-    li Use migrations when running Unit/Int Tests!
-    li DO NOT modify a flyway file after it has been deployed
-      ul
-        li The stored file hash will no longer match, causing startup to fail
+    @Field @Inject SheetsService sheetsService
+    @Field @Inject DarkSkyService darkSkyService
 
-section
-  img.large(src="../../../resources/images/flyway-file-hell.png")
-  h4 Flyway file mess
+    Map&lt;String, Object> grachio() {
+      log.debug 'starting grachio function'
 
-section
-  h3 Multitenant Scripts
-  ul
-    li Keep DDL scripts in separate folder than data load
-    li Schema load scripts are same for all tenants
-    li Data Load scripts are tenant-specific
-    li You may want a tool to manage tenant data
+      List rachioData = sheetsService.getRachioData().takeRight(10)
 
-section
-  h3 Multitenant Migrations
-  ul
-    li You DEFINITELY need a script to run migrations
-      |  against all tenant schemas on deploy
-      ul
-        li Easy with Gradle + Jenkins
-    li Disable the spring boot automatic flyway migrations for deployments
-      ul
-        li Enabled for local and tests
-
-section
-  img(src="../../../resources/images/mariadb.png")
-  h3 MariaDB4j
-  ul
-    li
-      a(href="https://mariadb.org/", target="_blank") MariaDB
-      |  is the new open source MySQL
-    li
-      a(href="https://github.com/vorburger/MariaDB4j", target="_blank") MariaDB4j
-      |  is a Java/Spring wrapper
-    li Embedded database for local and CI tests
-    li Similar to H2 but uses MariaDB
-    li Spins up DB at Boot Startup
-
-section
-  h2 MariaDB4j - Pros
-  ul
-    li Can persist db to filesystem for local development
-    li Creates clean db for every test run, then destroys it
-    li Eliminates need to install MariaDB locally
-    li SQL migrations locally to better match than H2
-
-section
-  h2 MariaDB4j - Cons
-  ul
-    li Slower startup than H2 - 30 seconds or so
-    li Have to run local server to connect with DB Tools
-
-section
-  h2 MariaDB4j
-  pre.small.
-    <code class="groovy" data-trim data-noescape contentEditable>  @Configuration
-      @Profile(['local', 'integrationTest'])
-      class EmbeddedMariaDbConfig {
-
-      @Bean MariaDB4jSpringService mariaDB4jSpringService() {
-        new MariaDB4jSpringService() }
-
-      @Bean DataSource dataSource(
-      MariaDB4jSpringService mariaDB4jSpringService,
-      @Value('${mariaDB4j.databaseName}') String databaseName,
-      @Value('${spring.datasource.username}') String datasourceUsername,
-      @Value('${spring.datasource.password}') String datasourcePassword,
-      @Value('${spring.datasource.driver-class-name}') String datasourceDriver) {
-          mariaDB4jSpringService.getDB().createDB(databaseName)
-
-          DBConfigurationBuilder config = mariaDB4jSpringService.getConfiguration()
-          DataSourceBuilder.create()
-            .username(datasourceUsername).password(datasourcePassword)
-            .url(config.getURL(databaseName))
-            .driverClassName(datasourceDriver).build()
+      def result = [
+        rachioData: rachioData.collect {
+          [
+            date: it.date,
+            waterMinutes: it.waterMinutes,
+            weather: darkSkyService.getWeather(it.date)?.daily?.data[0]
+          ]
         }
-      }
+      ]
+
+      log.debug('result is {}', result)
+      result
+    }
     </code>
+
+section
+  h3 Lambda Java Deploy
+  ul
+    li Complicated Manual process
+    li Micronaut manual options
+    li AWS Cloudformation
+    li Terraform
+    li Gradle AWS plugin
+
+section
+  h4 Gradle Deploy Setup
+  pre.
+    <code class="groovy" contentEditable>if(new File("${System.getProperty("user.home")}/.aws/credentials").exists()) {
+        task deploy(type: AWSLambdaMigrateFunctionTask, dependsOn: shadowJar) {
+            functionName = "grachio"
+            handler = "grachio.GrachioFunction::grachio"
+            role = "arn:aws:iam::${aws.accountId}:role/service-role/lambda_basic_execution"
+            runtime = com.amazonaws.services.lambda.model.Runtime.Java8
+            zipFile = shadowJar.archivePath
+            memorySize = 512
+            timeout = 20
+        }
+
+        task invoke(type: AWSLambdaInvokeTask) {
+            functionName = "grachio"
+            invocationType = InvocationType.RequestResponse
+            // payload = '{"name":"Fred"}'
+            doLast {
+                println "Lambda function result: " + new String(invokeResult.payload.array(), "UTF-8")
+            }
+        }
+    }
+    </code>
+
+section
+  h4 Lambda Micronaut Demo time!
+  img(src="https://media.giphy.com/media/5VKbvrjxpVJCM/giphy.gif")
+  br
+  a(href="https://media.giphy.com/media/5VKbvrjxpVJCM/giphy.gif" target="_blank").citation https://media.giphy.com/media/5VKbvrjxpVJCM/giphy.gif

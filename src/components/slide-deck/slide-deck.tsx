@@ -32,7 +32,8 @@ export class SlideDeck extends React.Component<SlideDeckProps, SlideDeckState> {
 
       Reveal.initialize({
         history: true,
-        margin: 0.20,
+        margin: 0.15,
+        width: 1048,
         dependencies: [
           {
             async: true,

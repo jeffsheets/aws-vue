@@ -1,48 +1,129 @@
 section
-  h1 Multitenancy Tips
+  h1 Vue.js on AWS S3
 
 section
-  h2 Common (Admin) Schema
+  h2 Static Site
   ul
-    li Table of tenant names and properties
-    li As much as possible, put common data into separate microservices
-      ul
-        li Reduce redundancy and maintenance
+    li Vue, React, Angular, Ember, etc
+    li Webpack bundler
+    li Deploy as just files
 
 section
-  h2 Separate Admin UI App
+  h2 Deploy Static Site
   ul
-    li Consider having a separate `admin` UI app
-      ul
-        li So that the multitenant app deals solely in client-specific REST services
-        li It is tough to call multiple tenants with same DB session with Hibernate
-        li
-          a(href="https://hibernate.atlassian.net/browse/HHH-9766", target="_blank") Bug HHH-9766
+    li AWS S3 bucket w/ Cloudfront CDN
+    li Github pages
+    li Netlify
+    li Surge
 
 section
-  h3 Duplicate Record Ids on each DB
-  ul
-    li `Customer` table in each tenant schema
-    li CustomerID 1 exists in each schema
-    li Can make it tough to track down in logs later
-    li Suggest using UUIDs from the beginning
+  h3 AWS S3 Config
+  img(src="../../../resources/images/s3-config.png")
 
 section
-  h3 Users and Roles and User Attributes
+  img(src="../../../resources/images/vue.png")
+  h3 Vue.js
   ul
-    li You must decide if User Accounts are per tenant
-    li Or can your Users access multiple tenants?
-      ul
-        li This is really a business question
-    li Role Names are same for all tenants (because code is same)
-    li User Attributes could be per User, or per User-Tenant
+    li Created by a former Angular developer
+    li Not backed by Facebook/Google
+    li In my opinion, simpler, and easier to learn
 
 section
-  img(src="../../../resources/images/auth0.png")
+  h3 Vue CLI
   ul
-    li A cloud identity provider, like Auth0 can help
-    li Auth0 handles authentication credentials
-    ul
-      li And OAuth connections to Google, Facebook, etc
-    li Amegala is using Auth0 for the conference website
-    li Stores user attributes as simple JSON
+    li Like Create-React-App or Ember CLI
+    li All-in-one Vue + Webpack + Plugins
+    li We will deploy with Vue CLI S3 Deploy plugin
+
+section
+  h3 Vue Create Options
+  img(src="../../../resources/images/vue-create-options.png")
+
+section
+  h3 Vue CLI Selections
+  img(src="../../../resources/images/vue-cli-selections.png")
+
+section
+  h4 Vue Sample
+  pre.
+    <code class="html" contentEditable>&lt;template>
+      &lt;div v-if="!grachio">Loading...&lt;/div>
+      &lt;div v-else>
+        &lt;table class="pure-table pure-table-horizontal">
+          &lt;thead>
+            &lt;tr>
+              &lt;th>Date&lt;/th>
+              &lt;th>Water Minutes&lt;/th>
+              &lt;th>High Feels Like&lt;/th>
+              &lt;th>High Temp&lt;/th>
+              &lt;th>Low Temp&lt;/th>
+              &lt;th>&nbsp;&lt;/th>
+              &lt;th>Summary&lt;/th>
+            &lt;/tr>
+          &lt;/thead>
+          &lt;tbody>
+            &lt;GrachioRow v-for="row in grachio.rachioData" :key="row.date" :row="row"/>
+          &lt;/tbody>
+        &lt;/table>
+      &lt;/div>
+    &lt;/template>
+    
+    &lt;script>
+    import GrachioRow from "./GrachioRow";
+    export default {
+      name: "GrachioDisplay",
+      components: { GrachioRow },
+      props: {
+        grachio: {
+          type: Object,
+          default: () => null
+        }
+      }
+    };
+    &lt;/script>
+    
+    &lt;style scoped lang="less">
+    table {
+      margin: 0 auto;
+      thead {
+        background-color: lighten(#42b983, 30%);
+        th {
+          text-align: center;
+        }
+      }
+      tbody {
+        tr:nth-child(odd) {
+          background-color: lighten(#42b983, 45%);
+        }
+      }
+    }
+    &lt;/style>
+
+    </code>
+
+section
+  h3 Vue.js Highlights
+  ul
+    li Single file to hold Template, Script, Style
+    li Props, Data, Computed
+    li Watch data changes
+
+section
+  img(src="https://media.giphy.com/media/l3q2y79zYZgeiIywU/source.gif")
+  h3 What I like about Vue.js
+  ul
+    li Templates feel like Angular
+    li Javascript feels like React
+    li Watching data feels like Ember
+  br
+  a(href="https://media.giphy.com/media/l3q2y79zYZgeiIywU/giphy.gif" target="_blank").citation https://media.giphy.com/media/l3q2y79zYZgeiIywU/giphy.gif
+
+section
+  h3 Vue Deploy S3 - Setup
+  img(src="../../../resources/images/vue-cli-deploy-s3.png")
+
+section
+  h4 Vue.js + S3 Demo time!
+  img(src="https://media.giphy.com/media/11sBLVxNs7v6WA/giphy.gif")
+  br
+  a(href="https://media.giphy.com/media/11sBLVxNs7v6WA/giphy.gif" target="_blank").citation https://media.giphy.com/media/11sBLVxNs7v6WA/giphy.gif

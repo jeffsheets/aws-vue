@@ -116,4 +116,11 @@ Separate Lambda for Sheets & DarkSky
 Call Weather API and store value each day after watering
 Save backups of API calls, just in case network dies
 Lambda API Key to limit usage
+CircleCI Build/Deploy on git commitsRachio API push to Kinesis and store in AWS
+Separate Lambda for Sheets & DarkSky
+Call Weather API and store value each day after watering
+Lambda API Key to limit usage
 CircleCI Build/Deploy on git commits
+
+TODO:
+Save backups of API calls, just in case network dies

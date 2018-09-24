@@ -1,13 +1,39 @@
 section
-  h1 Other Thoughts
+  h1 Serverless Afterthoughts
 
 section
-  h2 Other Thoughts
+  h3 Lambda Sweet Spot
   ul
-    li Security - Auth0/Okta
-    li Messaging/Streaming
-    li Storage/databases
-    li IoT
+    li AWS services glue
+    li Event processing
+    li IoT backends
+
+section
+  h3 Lambda Struggles
+  ul
+    li Spin-up time from cold start
+    li Sudden scaling
+    li Code Management Maturity
+    li Use EC2 Docker containers
+
+section
+  img.venti(src="https://media.giphy.com/media/VerIk7pS3iEEg/giphy.gif")
+  h3 Pricing
+  ul
+    li Always cheap/free to start
+    li Complicated to forecast
+    li Generally cheap/affordable until gone viral
+    li As a developer, $37 coffee, sure!
+  br
+  a(href="https://media.giphy.com/media/VerIk7pS3iEEg/giphy.gif" target="_blank").citation https://media.giphy.com/media/VerIk7pS3iEEg/giphy.gif
+
+section
+  h3 The Details
+  ul
+    li API Gateway in front of Lambda
+    li Cloudfront CDN
+    li Cloudformation / Terraform
+    li Caching for API Limits
 
 section
   img(src="../../../resources/images/auth0.png")
@@ -17,3 +43,13 @@ section
     ul
       li And OAuth connections to Google, Facebook, etc
     li Stores user attributes as simple JSON
+
+section
+  h4 What would I improve?
+  ul
+    li Rachio API push to Kinesis and store in AWS
+    li Call Weather API and store value each day after watering
+    li Separate Lambda for Sheets & DarkSky
+    li PWA - Save backups of API calls, just in case network dies
+    li Lambda API Key to limit usage
+    li CircleCI Build/Deploy on git commits
