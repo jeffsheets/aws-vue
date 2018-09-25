@@ -124,3 +124,5 @@ CircleCI Build/Deploy on git commits
 
 TODO:
 Save backups of API calls, just in case network dies
+Figure out What to Demo
+Make Diagram of how all the pieces fit together

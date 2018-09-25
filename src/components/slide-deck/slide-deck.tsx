@@ -66,7 +66,7 @@ export class SlideDeck extends React.Component<SlideDeckProps, SlideDeckState> {
         <div className="slides">
           <section data-state="title">
             <h2>AWS Serverless for Devs</h2>
-            <h3>Vue + Micronaut -- Jeff Sheets 2018</h3>
+            <h3>Vue + Lambda -- Jeff Sheets 2018</h3>
           </section>
           {
             slides

@@ -1,55 +1,43 @@
 section
-  h1 Serverless Afterthoughts
+  h1 Serverless Smallprint
 
 section
-  h3 Lambda Sweet Spot
+  h3 Lambda Cold-start Time
   ul
-    li AWS services glue
-    li Event processing
-    li IoT backends
+    li Once "warm"
+    li Cold-start time 2-3 seconds
+    li Varies by Language and Vendor
+    li Great article from @MikhailShilkov
+      br
+      a(href="https://mikhail.io/2018/08/serverless-cold-start-war/" target="_blank") Serverless: Cold Start War
 
 section
-  h3 Lambda Struggles
-  ul
-    li Spin-up time from cold start
-    li Sudden scaling
-    li Code Management Maturity
-    li Use EC2 Docker containers
+  a(href="https://mikhail.io/2018/08/serverless-cold-start-war/" target="_blank").citation https://mikhail.io/2018/08/serverless-cold-start-war/
+  br
+  img(src="../../../resources/images/coldstart-per-language.png")
 
 section
-  img.venti(src="https://media.giphy.com/media/VerIk7pS3iEEg/giphy.gif")
+  img.largeheight(src="../../../resources/images/coldstart-dependencies.png")
+  br
+  a(href="https://mikhail.io/2018/08/serverless-cold-start-war/" target="_blank").citation https://mikhail.io/2018/08/serverless-cold-start-war/
+
+section
   h3 Pricing
   ul
-    li Always cheap/free to start
     li Complicated to forecast
+    li Always cheap/free to start
     li Generally cheap/affordable until gone viral
-    li As a developer, $37 coffee, sure!
+    li Paying for convenience, scalability, etc
+  img.venti(src="https://media.giphy.com/media/VerIk7pS3iEEg/giphy.gif")
   br
   a(href="https://media.giphy.com/media/VerIk7pS3iEEg/giphy.gif" target="_blank").citation https://media.giphy.com/media/VerIk7pS3iEEg/giphy.gif
 
 section
-  h3 The Details
-  ul
-    li API Gateway in front of Lambda
-    li Cloudfront CDN
-    li Cloudformation / Terraform
-    li Caching for API Limits
-
-section
-  img(src="../../../resources/images/auth0.png")
-  ul
-    li A cloud identity provider, like Auth0 can help
-    li Auth0 handles authentication credentials
-    ul
-      li And OAuth connections to Google, Facebook, etc
-    li Stores user attributes as simple JSON
-
-section
-  h4 What would I improve?
+  h3 What would I improve?
   ul
     li Rachio API push to Kinesis and store in AWS
-    li Call Weather API and store value each day after watering
+    li Store weather each day after watering
     li Separate Lambda for Sheets & DarkSky
-    li PWA - Save backups of API calls, just in case network dies
+    li PWA - Backups of API calls, just in case network dies
     li Lambda API Key to limit usage
     li CircleCI Build/Deploy on git commits
